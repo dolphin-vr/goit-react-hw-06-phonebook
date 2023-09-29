@@ -2,14 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { ThemeProvider } from 'styled-components';
 import { App } from 'components/App';
+import { Provider } from 'react-redux';
+import { store } from 'redux/store';
 
 const theme = {
   colors: {
-    background: "#efefef",
+    background: '#efefef',
     white: '#fff',
     red: '#ff0000',
     green: '#00bb00',
-    blue: "blue",
+    blue: 'blue',
   },
   radii: {
     sm: '4px',
@@ -22,7 +24,9 @@ const theme = {
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
-      <App />
+      <Provider store={store}>
+        <App />
+      </Provider>
     </ThemeProvider>
   </React.StrictMode>
 );

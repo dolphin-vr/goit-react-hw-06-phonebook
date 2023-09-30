@@ -4,14 +4,8 @@ import { ContactForm } from './ContactForm/ContactForm';
 import { ContactList } from './ContactList/ContactList';
 import { Filter } from './Filter/Filter';
 import { MdOutlineContactPhone } from "react-icons/md";
+import { Toaster } from 'react-hot-toast';
 
-// const getSavedContacts =()=>{
-//   const savedContacts = localStorage.getItem('contacts');
-//   if (savedContacts !== null) {
-//     return JSON.parse(savedContacts)
-//   };
-//   return []
-// }
 
 export const App = () => {
 
@@ -23,6 +17,7 @@ export const App = () => {
         <Filter />
         <ContactList />
         <GlobalStyle />
+        <Toaster />
       </Layout>
     );
 }

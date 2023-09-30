@@ -1,30 +1,33 @@
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import "yup-phone-lite";
-import { Notify } from 'notiflix';
 import { Label, StyledForm, StyledField, ErrorMsg } from "./ContactForm.styled"
 import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from 'redux/actions';
+import toast from 'react-hot-toast';
+import { getContacts } from 'redux/selectors';
 
-// const phoneRegExp = "/^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/";
 const phonePattern = "\\+?\\d{1,4}?[ .\\-\\s]?\\(?\\d{1,3}?\\)?[ .\\-\\s]?\\d{1,4}[ .\\-\\s]?\\d{1,4}[ .\\-\\s]?\\d{1,9}";
 
 const phoneSchema = Yup.object().shape({
    name: Yup.string().min(2, 'Too Short!').required('Name is required'),
-   // phone: Yup.string().phone(["US", "UA"], "Please enter a valid phone number")
    phone: Yup.string().matches(phonePattern, 'Phone number is not valid')
    .required("A phone number is required")
  });
  
-const optNotiflx = {
+const toastOptions  = {
   position: 'center-top',
-  timeout: 5000,
-  fontSize: '18px',
+  duration: 5000,
+  style: {
+    width: '100%',
+    fontSize: '22px',
+    backgroundColor: '#f7ba60',
+  },  
 };
 
 
 export const ContactForm =()=>{
-  const contacts = useSelector(state => state.contacts);
+  const contacts = useSelector(getContacts);
   const dispatch= useDispatch();
   
   const isInList = contact =>{
@@ -33,7 +36,7 @@ export const ContactForm =()=>{
 
   const onAdd = contact => {
     if (isInList(contact)) {
-      Notify.warning(`${contact.name} is already in contacts`, optNotiflx)
+      toast(`${contact.name} is already in contacts`, toastOptions );
     } else{
       dispatch(addContact(contact));
     }

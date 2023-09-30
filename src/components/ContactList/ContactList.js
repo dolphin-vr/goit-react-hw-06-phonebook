@@ -2,10 +2,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { BtnDelete, List, ListItem, Name, Phone, Wrapper } from "./ContactList.styled"
 import {MdOutlineDeleteForever} from "react-icons/md";
 import { deleteContact } from "redux/actions";
+import { getContacts, getFilter } from "redux/selectors";
 
 export const ContactList = () =>{
-   const contacts = useSelector(state=>state.contacts);
-   const filter = useSelector(state=>state.filter);
+   const contacts = useSelector(getContacts);
+   const filter = useSelector(getFilter);
    const filteredContacts = contacts.filter(el => el.name.toLowerCase().startsWith(filter.toLowerCase()));
    const dispatch = useDispatch();
    return (

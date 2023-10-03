@@ -3,9 +3,9 @@ import * as Yup from 'yup';
 import "yup-phone-lite";
 import { Label, StyledForm, StyledField, ErrorMsg } from "./ContactForm.styled"
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from 'redux/actions';
 import toast from 'react-hot-toast';
 import { getContacts } from 'redux/selectors';
+import { addContact } from 'redux/contactsSlice';
 
 const phonePattern = "\\+?\\d{1,4}?[ .\\-\\s]?\\(?\\d{1,3}?\\)?[ .\\-\\s]?\\d{1,4}[ .\\-\\s]?\\d{1,4}[ .\\-\\s]?\\d{1,9}";
 

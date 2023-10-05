@@ -1,29 +1,49 @@
+import { createSlice } from "@reduxjs/toolkit";
+import { persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 import { nanoid } from "nanoid";
 
-export const contactsReducer = (state = [], action) => {
-   switch (action.type) {
-      case "contacts/addContact":
-         return [...state, action.payload];
-      case "contacts/deleteContact":
-         return state.filter(el=>el.id !== action.payload);
-      default: return state;
-   }
-};
+// ## using  createAction and createReducer
+// import { createAction, createReducer } from "@reduxjs/toolkit";
+// export const addContact = createAction("contacts/addContact");
+// export const deleteContact = createAction("contacts/deleteContact");
+// export const contactsReducer = createReducer([], builder =>
+//    builder
+//       .addCase(addContact, (state, action)=>{state.push(action.payload)})
+//       .addCase(deleteContact, (state, action)=>{return state.filter(el=>el.id !== action.payload)})
+// )
 
-export const addContact = contact => {
-   return{
-      type: "contacts/addContact",
-      payload: {
-         id: nanoid(),
-         name: contact.name,
-         phone: contact.phone,
+// ## using createSlice
+const slice = createSlice({
+   name: 'contacts',
+   initialState: {contacts: []},
+   reducers: {
+      addContact: {
+         reducer(state, action){state.contacts.push(action.payload)},
+         prepare(contact){
+               return {payload: {
+                  id: nanoid(),
+                  name: contact.name,
+                  phone: contact.phone,}
+               }}
       },
+      deleteContact(state, action){
+         // return state.contacts.filter(el=>el.id !== action.payload)
+         const index = state.contacts.findIndex(el => el.id === action.payload);
+         state.contacts.splice(index, 1);
+      }
    }
- }
+});
 
-export const deleteContact = id =>{
-   return{
-      type: "contacts/deleteContact",
-      payload: id,
-   }
+const persistConfig = {
+   key: 'contacts',
+   storage,
+   whitelist: ['contacts'],   
  }
+ 
+export const contactsReducer = persistReducer(persistConfig, slice.reducer);
+// export const contactsReducer = slice.reducer;
+
+export const {addContact, deleteContact} = slice.actions;
+
+export const getContacts = state=>state.contacts.contacts;

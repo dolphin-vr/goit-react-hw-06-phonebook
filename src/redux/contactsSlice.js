@@ -28,13 +28,8 @@ const slice = createSlice({
                }}
       },
       deleteContact(state, action){
-         return state.contacts.contacts.filter(el=>el.id !== action.payload)
+         state.contacts = state.contacts.filter(el => el.id !== action.payload);
       }
-      // deleteContact(state, action){
-         // return state.contacts.filter(el=>el.id !== action.payload)
-         // const index = state.contacts.findIndex(el => el.id === action.payload);
-         // state.contacts.splice(index, 1);
-      // }
    }
 });
 

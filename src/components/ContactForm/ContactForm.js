@@ -4,8 +4,7 @@ import "yup-phone-lite";
 import { Label, StyledForm, StyledField, ErrorMsg } from "./ContactForm.styled"
 import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
-import { getContacts } from 'redux/selectors';
-import { addContact } from 'redux/contactsSlice';
+import { addContact, getContacts } from 'redux/contactsSlice';
 
 const phonePattern = "\\+?\\d{1,4}?[ .\\-\\s]?\\(?\\d{1,3}?\\)?[ .\\-\\s]?\\d{1,4}[ .\\-\\s]?\\d{1,4}[ .\\-\\s]?\\d{1,9}";
 
@@ -28,7 +27,7 @@ const toastOptions  = {
 
 export const ContactForm =()=>{
   const contacts = useSelector(getContacts);
-  const dispatch= useDispatch();
+  const dispatch= useDispatch();  
   
   const isInList = contact =>{
     return contacts.some(el => (el.name.toLowerCase()===contact.name.toLowerCase()))

@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { BtnDelete, List, ListItem, Name, Phone, Wrapper } from "./ContactList.styled"
 import {MdOutlineDeleteForever} from "react-icons/md";
-import { getContacts, getFilter } from "redux/selectors";
-import { deleteContact } from "redux/contactsSlice";
+import { deleteContact, getContacts } from "redux/contactsSlice";
+import { getFilter } from "redux/filterSlice";
 
 export const ContactList = () =>{
    const contacts = useSelector(getContacts);
